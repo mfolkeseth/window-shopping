@@ -37966,7 +37966,8 @@ return jQuery;
         boughtItem.size = vm.selectedSize;
         boughtItem.phone = vm.phoneNumber;
         vm.bought.push(boughtItem);
-        localStorage['bought'] = JSON.stringify(vm.bought);
+        localStorage['bought'] = angular.toJson(vm.bought);
+        // console.log(angular.toJson(vm.bought));
       });
     }
 

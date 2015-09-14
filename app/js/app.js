@@ -22,7 +22,6 @@
     vm.phoneNumber = '';
     vm.selectedSize = '';
     vm.bought = JSON.parse(localStorage['bought']);
-    console.log(vm.bought);
 
     vm.carouselInitializer = function() {
       var carousel = $('.owl-carousel').owlCarousel({
@@ -67,7 +66,7 @@
         boughtItem.size = vm.selectedSize;
         boughtItem.phone = vm.phoneNumber;
         vm.bought.push(boughtItem);
-        localStorage['bought'] = JSON.stringify(vm.bought);
+        localStorage['bought'] = angular.toJson(vm.bought);
       });
     }
 
