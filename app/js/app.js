@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('wsApp', []);
+    .module('wsApp', ['ngStorage']);
 })();
 
 (function() {
@@ -12,16 +12,19 @@
     .module('wsApp')
     .controller('mainController', mainController);
 
-  mainController.$inject = ['$http', 'productFactory'];
+  mainController.$inject = ['$http', '$localStorage', 'productFactory'];
 
-  function mainController($http, productFactory) {
+  function mainController($http, $localStorage, productFactory) {
     var vm = this;
     vm.admin = false;
     vm.products = productFactory.getProducts();
     vm.currentProduct = vm.products[0];
     vm.phoneNumber = '';
     vm.selectedSize = '';
-    vm.bought = JSON.parse(localStorage['bought']);
+    $localStorage.$default({
+      bought: angular.toJson([])
+    });
+    vm.bought = JSON.parse($localStorage.bought);
 
     vm.carouselInitializer = function() {
       var carousel = $('.owl-carousel').owlCarousel({
@@ -66,7 +69,7 @@
         boughtItem.size = vm.selectedSize;
         boughtItem.phone = vm.phoneNumber;
         vm.bought.push(boughtItem);
-        localStorage['bought'] = angular.toJson(vm.bought);
+        $localStorage.bought = angular.toJson(vm.bought);
       });
     }
 

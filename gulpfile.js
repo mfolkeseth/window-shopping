@@ -10,6 +10,7 @@ gulp.task('default', ['sass', 'js']);
 gulp.task('js', function() {
   return gulp.src([
       'node_modules/angular/angular.js',
+      'node_modules/ngstorage/ngStorage.js',
       'node_modules/jquery/dist/jquery.js',
       'app/js/**/*.js'
     ])
