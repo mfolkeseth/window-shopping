@@ -2,26 +2,94 @@
 <html ng-app="wsApp">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Window shopping</title>
     <link rel="stylesheet" href="node_modules/css-reset/reset.css">
     <link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
     <link rel="stylesheet" href="default.css">
     <link rel="stylesheet" href="thirdparty/css/owl.carousel.css">
+    <link rel="stylesheet" href="thirdparty/css/material.min.css">
   </head>
   <body>
     <div class="main-content" ng-controller="mainController as mainController">
-      <div class="carousel-wrapper">
-        <div class="owl-carousel">
-          <div class="item" ng-repeat="product in mainController.products" carousel carousel-init="mainController.carouselInitializer">
-            <img src="{{ product.image }}" alt="">
-            <div class="price">{{ product.price }}</div>
+      <a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect start-over" href="/">Begynn på nytt</a>
+      <div class="shop" ng-show="!mainController.admin">
+        <div class="carousel-wrapper js-carousel">
+          <div class="owl-carousel">
+            <div class="item" ng-repeat="product in mainController.products" carousel carousel-init="mainController.carouselInitializer">
+              <img src="{{ product.image }}" alt="">
+              <div class="price">{{ product.price }}</div>
+            </div>
           </div>
         </div>
+        <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect buy" ng-click="mainController.buy($event)">Kjøp nå</button>
+        <div class="sizes js-sizes">
+          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('S', $event)">S</button>
+          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('M')">M</button>
+          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('L')">L</button>
+          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('XL')">XL</button>
+          <h1 ng-show="mainController.selectedSize.length > 0">Størrelse: {{ mainController.selectedSize }}</h1>
+          <button ng-show="mainController.selectedSize.length > 0"
+            class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
+            ng-click="mainController.sizeSelected($event)">Gå videre</button>
+        </div>
+        <div class="phone-number js-phone">
+          <h1>Bestillingen leveres innen 2 timer. Du får SMS når du kan komme på stand</h1>
+          <form>
+            <label for="phone-number">Mob:</label>
+            <input type="text" name="phone-number" id="phone-number" ng-model="mainController.phoneNumber">
+            <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.numberComplete($event)">OK</button>
+            <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.removeNumber()">Fjern</button>
+            <div class="numpad">
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('7')">7</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('8')">8</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('9')">9</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('4')">4</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('5')">5</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('6')">6</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('1')">1</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('2')">2</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('3')">3</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('0')">0</button>
+            </div>
+          </form>
+        </div>
+        <div class="confirmation js-confirm">
+          <h1>Takk!</h1>
+          <h2>
+            Du bestilte en {{ mainController.currentProduct.color }} {{ mainController.currentProduct.name }} i sørrelse {{ mainController.selectedSize }}
+          </h2>
+          <a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" href="/">Ferdig</a>
+        </div>
       </div>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent buy">Kjøp nå</button>
+      <div class="admin" ng-show="mainController.admin">
+        <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Produkt</th>
+              <th>Farge</th>
+              <th>Størrelse</th>
+              <th>Pris</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="row in mainController.bought">
+              <td><img src="{{ row.image }}" alt=""></td>
+              <td>{{ row.name }}</td>
+              <td>{{ row.color }}</td>
+              <td>{{ row.size }}</td>
+              <td>{{ row.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect admin-link" ng-click="mainController.adminMode()">Admin</button>
     </div>
 
     <script src="app.js"></script>
+    <script src="node_modules/material-design-lite/material.js"></script>
     <script src="thirdparty/js/owl.carousel.js"></script>
   </body>
 </html>

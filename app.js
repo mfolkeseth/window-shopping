@@ -37908,98 +37908,70 @@ return jQuery;
   'use strict';
 
   angular
-    .module('wsApp', [])
+    .module('wsApp')
     .controller('mainController', mainController);
 
-  mainController.$inject = ['$http'];
+  mainController.$inject = ['$http', 'productFactory'];
 
-  function mainController($http) {
+  function mainController($http, productFactory) {
     var vm = this;
-    vm.products = [
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050219463854_f_7121800_556.jpg',
-        color: 'Blue',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050219463793_f_7121800_862.jpg',
-        color: 'Brown',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050218044320_f_7121800_720.jpg',
-        color: 'Green',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050219463915_f_7121800_941.jpg',
-        color: 'Grey',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050218044382_f_7121800_130.jpg',
-        color: 'Yellow',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050218770007_f_7121800_493.jpg',
-        color: 'Purple',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050216391921_f_7121800_330.jpg',
-        color: 'Red',
-        price: 299
-      },
-      {
-        name: 'Pima Genser',
-        image: 'https://dressmann.com/globalassets/productimages/7050218044252_f_7121800_395.jpg',
-        color: 'Whine red',
-        price: 299
-      },
-      {
-        name: 'Smilla Cardigan',
-        image: 'https://bikbok.com/globalassets/productimages/7050219867072_f_smilla_cardigan_w31_p499_e4995_940-grey.jpg',
-        color: 'Grey',
-        price: 499
-      },
-      {
-        name: 'Smilla Cardigan',
-        image: 'https://bikbok.com/globalassets/productimages/7050219976750_f_smilla_cardigan_w42_p599_e4995_970-grey.jpg',
-        color: 'Dark grey',
-        price: 499
-      },
-      {
-        name: 'Smilla Cardigan',
-        image: 'https://bikbok.com/globalassets/productimages/7050219867089_f_smilla_cardigan_w31_p499_e4995_990-black.jpg',
-        color: 'Black',
-        price: 499
-      },
-      {
-        name: 'Smilla Cardigan',
-        image: 'https://bikbok.com/globalassets/productimages/7050219976743_f_smilla_cardigan_w42_p599_e4995_590-blue.jpg',
-        color: 'Blue',
-        price: 499
-      }
-    ];
+    vm.admin = false;
+    vm.products = productFactory.getProducts();
+    vm.currentProduct = vm.products[0];
+    vm.phoneNumber = '';
+    vm.selectedSize = '';
+    vm.bought = JSON.parse(localStorage['bought']);
+    console.log(vm.bought);
 
     vm.carouselInitializer = function() {
-      $('.owl-carousel').owlCarousel({
+      var carousel = $('.owl-carousel').owlCarousel({
         items: 1,
         loop: true,
-        center: true,
-        onDragged: dragged
+        center: true
       });
-      function dragged(event) {
-        console.log(event);
-      }
+      carousel.on('changed.owl.carousel', function(event) {
+        vm.currentProduct = vm.products[event.page.index];
+      });
+    }
+
+    vm.buy = function(event) {
+      $(event.target).parent().slideUp('fast', function(){
+        $('.js-sizes').slideDown('fast');
+      });
+    }
+
+    vm.selectSize = function(size){
+      vm.selectedSize = size;
+    }
+
+    vm.sizeSelected = function(event) {
+      $('.js-carousel').fadeOut('fast');
+      $('.js-sizes').slideUp('fase', function(){
+        $('.js-phone').slideDown('fast');
+      });
+    }
+
+    vm.addNumber = function(number){
+      vm.phoneNumber += number;
+    }
+
+    vm.removeNumber = function(){
+      vm.phoneNumber = vm.phoneNumber.slice(0, -1);
+    }
+
+    vm.numberComplete = function(event){
+      $('.js-phone').slideUp('fast', function(){
+        $('.js-confirm').slideDown('fast');
+        var boughtItem = vm.currentProduct;
+        boughtItem.size = vm.selectedSize;
+        boughtItem.phone = vm.phoneNumber;
+        vm.bought.push(boughtItem);
+        localStorage['bought'] = JSON.stringify(vm.bought);
+      });
+    }
+
+    vm.adminMode = function(){
+      vm.admin = !vm.admin;
     }
   }
 })();
@@ -41095,3 +41067,95 @@ return jQuery;
 	$.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
 
 })(window.Zepto || window.jQuery, window, document);
+
+(function(){
+  'use strict';
+
+  angular
+    .module('wsApp')
+    .factory('productFactory', productFactory);
+
+    function productFactory(){
+      var factory = {
+        getProducts: getProducts
+      }
+      return factory;
+
+      function getProducts(){
+        return [
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_blue.jpg',
+            color: 'blå',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_brown.jpg',
+            color: 'brun',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_green.jpg',
+            color: 'grønn',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_grey.jpg',
+            color: 'grå',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_yellow.jpg',
+            color: 'gul',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_purple.jpg',
+            color: 'lilla',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_red.jpg',
+            color: 'Red',
+            price: 299
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_whine_red.jpg',
+            color: 'Whine red',
+            price: 299
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_grey.jpg',
+            color: 'grå',
+            price: 499
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_dark_grey.jpg',
+            color: 'mørke grå',
+            price: 499
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_black.jpg',
+            color: 'sort',
+            price: 499
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_blue.jpg',
+            color: 'blå',
+            price: 499
+          }
+        ];
+      }
+    }
+})();
