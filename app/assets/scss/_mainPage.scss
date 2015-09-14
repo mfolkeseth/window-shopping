@@ -1,0 +1,16 @@
+.main-content {
+  background-color: red;
+  height: 1920px;
+  width: 1080px;
+
+  .owl-carousel {
+    position: relative;
+    top: 500px;
+    left: 300px;
+    .owl-item {
+      img {
+        width: 500px;
+      }
+    }
+  }
+}
