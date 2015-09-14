@@ -91,27 +91,38 @@
       }
     ];
 
-    // $('.owl-carousel').owlCarousel({
-    //
-    // });
+    vm.carouselInitializer = function() {
+      $('.owl-carousel').owlCarousel({
+        items: 1,
+        loop: true,
+        center: true,
+        onDragged: dragged
+      });
+      function dragged(event) {
+        console.log(event);
+      }
+    }
   }
 })();
 
-// (function() {
-//   angular
-//     .module('wsApp')
-//     .directive('carousel', carousel);
-//
-//     function carousel(){
-//       var directive = {
-//         link: link
-//       };
-//       return directive;
-//       function link(scope, element, attrs){
-//         console.log('directive responding');
-//         $('.owl-carousel').owlCarousel({
-//
-//         });
-//       }
-//     }
-// })();
+(function() {
+  angular
+    .module('wsApp')
+    .directive('carousel', carousel);
+
+    function carousel(){
+      var directive = {
+        restrict: 'A',
+        scope: {
+          carouselInit: '&'
+        },
+        link: link
+      };
+      return directive;
+      function link(scope, element, attrs){
+        if ((scope.$parent != null) && scope.$parent.$last) {
+          return scope.carouselInit()();
+        }
+      }
+    }
+})();

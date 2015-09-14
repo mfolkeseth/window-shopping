@@ -3,14 +3,32 @@
   height: 1920px;
   width: 1080px;
 
-  .owl-carousel {
-    position: relative;
-    top: 500px;
-    left: 300px;
-    .owl-item {
-      img {
-        width: 500px;
+  .carousel-wrapper{
+    height: 1300px;
+    .owl-carousel {
+      // position: relative;
+      width: 500px;
+      top: 500px;
+      margin: 0 auto;
+      .owl-item {
+        .price {
+          position: absolute;
+          right: 50px;
+          bottom: 50px;
+          font-size: 50px;
+          background-color: yellow;
+          padding: 50px;
+          border-radius: 600px;
+        }
       }
     }
+  }
+  .buy {
+    margin: 0 auto;
+    display: block;
+    font-size: 50px;
+    padding: 20px 200px;
+    height: 100px;
+    vertical-align: middle;
   }
 }

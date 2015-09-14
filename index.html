@@ -10,44 +10,18 @@
   </head>
   <body>
     <div class="main-content" ng-controller="mainController as mainController">
-      <!-- <pre>
-        {{ mainController.products }}
-      </pre> -->
-      <!-- <div class="owl-carousel">
-        <div class="item" ng-repeat="product in mainController.products" carousel>
-          <img src="{{ product.image }}" alt="">
+      <div class="carousel-wrapper">
+        <div class="owl-carousel">
+          <div class="item" ng-repeat="product in mainController.products" carousel carousel-init="mainController.carouselInitializer">
+            <img src="{{ product.image }}" alt="">
+            <div class="price">{{ product.price }}</div>
+          </div>
         </div>
-      </div> -->
-      <div class="owl-carousel">
-        <div class="item">
-          <img src="https://dressmann.com/globalassets/productimages/7050219463854_f_7121800_556.jpg" alt="">
-        </div>
-        <div class="item">
-          <img src="https://dressmann.com/globalassets/productimages/7050219463793_f_7121800_862.jpg" alt="">
-        </div>
-        <div class="item">
-          <img src="https://dressmann.com/globalassets/productimages/7050218044320_f_7121800_720.jpg" alt="">
-        </div>
-        <div class="item">
-          <img src="https://dressmann.com/globalassets/productimages/7050218044320_f_7121800_720.jpg" alt="">
-        </div>
-        <div class="item">
-          <img src="https://dressmann.com/globalassets/productimages/7050218044320_f_7121800_720.jpg" alt="">
-        </div>
-        <div class="item">
-          <img src="https://dressmann.com/globalassets/productimages/7050218044320_f_7121800_720.jpg" alt="">
-        </div>
+      </div>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent buy">Kjøp nå</button>
     </div>
 
     <script src="app.js"></script>
     <script src="thirdparty/js/owl.carousel.js"></script>
-    <script>
-      $(document).ready(function() {
-        $('.owl-carousel').owlCarousel({
-          items: 1,
-          loop: true
-        });
-      });
-    </script>
   </body>
 </html>
