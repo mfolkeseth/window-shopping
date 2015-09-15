@@ -38150,7 +38150,6 @@ return jQuery;
         navText: ['', '']
       });
       vm.carousel.on('changed.owl.carousel', function(event) {
-        console.log('change');
         vm.currentProduct = vm.products[event.page.index];
         $scope.$apply();
       });
@@ -38192,7 +38191,6 @@ return jQuery;
 
     vm.numberComplete = function(event){
       var phoneLength = $('.js-phone').find('input[type="text"]').val().length;
-      console.log(phoneLength);
       if(phoneLength == 8) {
         $('.js-phone').slideUp('normal', function(){
           $('.js-confirm').slideDown('normal');

@@ -53,8 +53,8 @@ html {
     line-height: 100px;
     height: 100px;
     background-color: white;
-    // color: white;
-    // border: none;
+    color: white;
+    border: none;
     right: 0;
     bottom: 0;
     padding: 0 20px;
@@ -154,9 +154,10 @@ html {
       font-family: 'avenir'!important;
       input[type="text"]{
         height: 89px;
-        padding: 0 20px;
+        padding: 5px 20px;
         text-align: right;
         font-family: 'avenir'!important;
+        vertical-align: middle;
       }
       button {
         font-size: 50px;
@@ -211,6 +212,11 @@ html {
       }
       img {
         width: 100px;
+      }
+
+      button {
+        height: 50px;
+        width: 50px;
       }
     }
   }
