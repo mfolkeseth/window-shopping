@@ -23,6 +23,7 @@
             </div>
           </div>
         </div>
+        <img src="{{ mainController.currentProduct.image }} " alt="" class="selected-image js-selected-product-image">
         <div class="buy js-buy">
           <h1>{{ mainController.currentProduct.name }} {{ mainController.currentProduct.price }},- <br>
           Levering her innen 2 timer!</h1>
@@ -30,7 +31,8 @@
         </div>
         <div class="sizes js-sizes">
           <h1>
-            Usikker på størrelse? <br>
+            Velg størrelse <br>
+            (Usikker på størrelse?) <br>
             Varene kan prøves her
           </h1>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('S', $event)">S</button>

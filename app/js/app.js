@@ -30,7 +30,7 @@
     vm.carouselInitializer = function() {
       vm.carousel = $('.owl-carousel').owlCarousel({
         items: 1,
-        //loop: true,
+        loop: true,
         center: true,
         autoplay: true,
         autoplayTimeout: 5000,
@@ -44,9 +44,16 @@
     }
 
     vm.buy = function(event) {
+
+      // vm.carousel.find('.owl-controls').fadeOut('normal');
       vm.carousel.trigger('stop.owl.autoplay');
-      vm.carousel.find('.owl-controls').fadeOut('normal');
-      //$('.js-carousel').fadeOut('normal');
+      $('.js-carousel').hide();
+      $('.js-carousel').remove();
+      $('.js-selected-product-image').show();
+      // $('.js-carousel').fadeOut('normal', function(){
+      //   $(this).remove();
+      //   $('.js-selected-product-image').fadeIn('normal');
+      // });
       //$('.js-logo').fadeOut('normal');
       $('.js-buy').slideUp('normal', function(){
         $('.js-sizes').slideDown('normal');
@@ -55,7 +62,7 @@
 
     vm.selectSize = function(size){
       vm.selectedSize = size;
-      $('.js-carousel').fadeOut('normal');
+      $('.js-selected-product-image').slideUp('normal');
       $('.js-sizes').slideUp('normal', function(){
         $('.js-phone').slideDown('normal');
         $('.js-phone').find('input[type="text"]').focus();
