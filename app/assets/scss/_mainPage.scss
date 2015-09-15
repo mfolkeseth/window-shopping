@@ -1,7 +1,29 @@
+@font-face {
+  font-family: 'avenir';
+  src: url('../fonts/12_Avenir_85_Heavy.ttf');
+}
+
 .main-content {
   height: 1920px;
   width: 1080px;
   padding: 0 100px;
+  text-align: center;
+
+  .mdl-button {
+    font-family: 'avenir'!important;
+  }
+
+  .mdl-button--colored {
+    background-color: #d31824!important;
+    &:hover {
+      background-color: #d31824!important;
+    }
+  }
+
+  .logo {
+    padding-top: 150px;
+    height: 100px;
+  }
 
   .start-over {
     font-size: 30px;
@@ -11,6 +33,7 @@
     top: 0;
     padding: 0 20px;
     position: absolute;
+    font-family: 'avenir'!important;
   }
 
   .admin-link {
@@ -21,43 +44,63 @@
     bottom: 0;
     padding: 0 20px;
     position: absolute;
+    font-family: 'avenir'!important;
   }
 
   .carousel-wrapper{
-    height: 1300px;
+    height: 1200px;
     .owl-carousel {
       // position: relative;
       width: 800px;
-      top: 250px;
+      top: 100px;
       margin: 0 auto;
       .owl-item {
-        .price {
-          position: absolute;
-          right: 50px;
-          bottom: 50px;
-          font-size: 50px;
-          background-color: rgb(233,30,99);
-          color: white;
-          padding: 50px;
-          border-radius: 600px;
-        }
+        // .price {
+        //   position: absolute;
+        //   right: 50px;
+        //   bottom: 50px;
+        //   font-size: 50px;
+        //   background-color: #d31824;
+        //   color: white;
+        //   padding: 50px;
+        //   border-radius: 600px;
+        // }
       }
     }
   }
   .buy {
-    margin: 0 auto;
-    display: block;
-    font-size: 50px;
-    padding: 20px 200px;
-    height: 100px;
-    vertical-align: middle;
-    opacity: 1;
-    visibility: visible;
+    h1 {
+      // position: absolute;
+      // right: 50px;
+      // bottom: 50px;
+      font-size: 50px;
+      font-family: 'avenir'!important;
+      //background-color: #d31824;
+      //color: white;
+      // padding: 50px;
+      // border-radius: 600px;
+    }
+    button {
+      margin: 0 auto;
+      display: block;
+      font-size: 50px;
+      padding: 20px 200px;
+      height: 100px;
+      vertical-align: middle;
+      opacity: 1;
+      visibility: visible;
+      font-family: 'avenir'!important;
+    }
   }
   .sizes {
+    padding-top: 500px;
     display: none;
     margin: 0 auto;
     text-align: center;
+    h1 {
+      font-family: 'avenir'!important;
+      font-size: 50px;
+    }
 
     button {
       font-size: 50px;
@@ -65,6 +108,7 @@
       padding: 20px 60px;
       height: 100px;
       vertical-align: middle;
+      font-family: 'avenir'!important;
       &.next{
         display: block;
       }
@@ -75,17 +119,24 @@
     padding-top: 500px;
     display: none;
     text-align: center;
+    h1 {
+      font-family: 'avenir'!important;
+      font-size: 50px;
+    }
     form {
       font-size: 50px;
+      font-family: 'avenir'!important;
       input[type="text"]{
-        padding: 19px 20px;
+        height: 89px;
+        padding: 0 20px;
         text-align: right;
-
+        font-family: 'avenir'!important;
       }
       button {
         font-size: 50px;
         padding: 0 20px;
         height: 100px;
+        font-family: 'avenir'!important;
       }
     }
     .numpad {
@@ -97,6 +148,7 @@
         width: 100px;
         height: 100px;
         margin: 10px 0;
+        font-family: 'avenir'!important;
       }
     }
   }
@@ -104,13 +156,17 @@
     padding-top: 500px;
     display: none;
     text-align: center;
-    font-size: 50px;
+    h1 {
+      font-size: 50px;
+      font-family: 'avenir'!important;
+    }
     a {
       font-size: 50px;
       height: 100px;
       padding: 0 20px;
       vertical-align: middle;
-      line-height: 120px;
+      line-height: 105px;
+      font-family: 'avenir'!important;
     }
   }
 

@@ -12,9 +12,9 @@
     .module('wsApp')
     .controller('mainController', mainController);
 
-  mainController.$inject = ['$http', '$localStorage', 'productFactory'];
+  mainController.$inject = ['$scope', '$http', '$localStorage', 'productFactory'];
 
-  function mainController($http, $localStorage, productFactory) {
+  function mainController($scope, $http, $localStorage, productFactory) {
     var vm = this;
     vm.admin = false;
     vm.products = productFactory.getProducts();
@@ -34,12 +34,15 @@
       });
       carousel.on('changed.owl.carousel', function(event) {
         vm.currentProduct = vm.products[event.page.index];
+        $scope.$apply();
       });
     }
 
     vm.buy = function(event) {
-      $(event.target).parent().slideUp('fast', function(){
-        $('.js-sizes').slideDown('fast');
+      $('.js-carousel').fadeOut('normal');
+      $('.js-logo').fadeOut('normal');
+      $('.js-buy').slideUp('normal', function(){
+        $('.js-sizes').slideDown('normal');
       });
     }
 
@@ -48,9 +51,9 @@
     }
 
     vm.sizeSelected = function(event) {
-      $('.js-carousel').fadeOut('fast');
-      $('.js-sizes').slideUp('fase', function(){
-        $('.js-phone').slideDown('fast');
+      $('.js-carousel').fadeOut('normal');
+      $('.js-sizes').slideUp('normal', function(){
+        $('.js-phone').slideDown('normal');
       });
     }
 
@@ -63,8 +66,8 @@
     }
 
     vm.numberComplete = function(event){
-      $('.js-phone').slideUp('fast', function(){
-        $('.js-confirm').slideDown('fast');
+      $('.js-phone').slideUp('normal', function(){
+        $('.js-confirm').slideDown('normal');
         var boughtItem = vm.currentProduct;
         boughtItem.size = vm.selectedSize;
         boughtItem.phone = vm.phoneNumber;
