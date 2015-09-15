@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="thirdparty/css/owl.carousel.css">
     <link rel="stylesheet" href="thirdparty/css/material.min.css">
   </head>
-  <body>
+  <body oncontextmenu="return false">
     <div class="main-content" ng-controller="mainController as mainController">
       <a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect start-over" href="/">Begynn på nytt</a>
       <div class="shop" ng-show="!mainController.admin">
@@ -24,28 +24,33 @@
           </div>
         </div>
         <div class="buy js-buy">
-          <h1>{{ mainController.currentProduct.name }} {{ mainController.currentProduct.price }},-</h1>
-          <h1>Levering her innen 2 timer</h1>
+          <h1>{{ mainController.currentProduct.name }} {{ mainController.currentProduct.price }},- <br>
+          Levering her innen 2 timer!</h1>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.buy($event)">Kjøp nå</button>
         </div>
         <div class="sizes js-sizes">
-          <h1>Usikker på størrelse? Varene kan prøves her</h1>
+          <h1>
+            Usikker på størrelse? <br>
+            Varene kan prøves her
+          </h1>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('S', $event)">S</button>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('M')">M</button>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('L')">L</button>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('XL')">XL</button>
           <h1 ng-show="mainController.selectedSize.length > 0">Størrelse: {{ mainController.selectedSize }}</h1>
-          <button ng-show="mainController.selectedSize.length > 0"
+          <!-- <button ng-show="mainController.selectedSize.length > 0"
             class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
-            ng-click="mainController.sizeSelected($event)">Gå videre</button>
+            ng-click="mainController.sizeSelected($event)">Gå videre</button> -->
         </div>
         <div class="phone-number js-phone">
-          <h1>Bestillingen leveres innen 2 timer. Du får SMS når du kan komme på stand</h1>
+          <h1>
+            Oppgi ditt mobilnummer. <br>
+            Du får SMS når bestillingen er klar for å hentes og betales med kort.
+          </h1>
           <form>
             <label for="phone-number">Mob:</label>
             <input type="text" name="phone-number" id="phone-number" ng-model="mainController.phoneNumber">
             <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.numberComplete($event)">OK</button>
-            <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.removeNumber()">Fjern</button>
             <div class="numpad">
               <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('7')">7</button>
               <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('8')">8</button>
@@ -56,14 +61,15 @@
               <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('1')">1</button>
               <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('2')">2</button>
               <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('3')">3</button>
-              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('0')">0</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect left-margin" ng-click="mainController.addNumber('0')">0</button>
+              <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.removeNumber()">C</button>
             </div>
           </form>
         </div>
         <div class="confirmation js-confirm">
-          <h1>Takk!</h1>
           <h1>
-            Du bestilte en {{ mainController.currentProduct.color }} {{ mainController.currentProduct.name }} i sørrelse {{ mainController.selectedSize }}
+            Takk for din bestilling av en  {{ mainController.currentProduct.color }} {{ mainController.currentProduct.name }} i størrelse {{ mainController.selectedSize }}.<br><br>
+            Du får SMS når bestillingen er klar for å hentes og betales med kort. <br>
           </h1>
           <a class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" href="/">Ferdig</a>
         </div>
@@ -75,9 +81,10 @@
               <th></th>
               <th>Produkt</th>
               <th>Farge</th>
-              <th>Størrelse</th>
+              <th>Str</th>
               <th>Pris</th>
               <th>Telefon</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -88,12 +95,14 @@
               <td>{{ row.size }}</td>
               <td>{{ row.price }}</td>
               <td>{{ row.phone }}</td>
+              <td><button ng-click="mainController.adminRemove(row)">X</button></td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect admin-link" ng-click="mainController.adminMode()">Admin</button>
+      <button class="admin-link" ng-click="mainController.adminMode()">Admin</button>
+      <img class="geta-logo" src="app/assets/images/geta-logo.png" alt="">
     </div>
 
     <script src="app.js"></script>

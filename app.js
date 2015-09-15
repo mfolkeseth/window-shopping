@@ -38128,6 +38128,7 @@ return jQuery;
 
   function mainController($scope, $http, $localStorage, productFactory) {
     var vm = this;
+    vm.carousel = {};
     vm.admin = false;
     vm.products = productFactory.getProducts();
     vm.currentProduct = vm.products[0];
@@ -38139,20 +38140,27 @@ return jQuery;
     vm.bought = JSON.parse($localStorage.bought);
 
     vm.carouselInitializer = function() {
-      var carousel = $('.owl-carousel').owlCarousel({
+      vm.carousel = $('.owl-carousel').owlCarousel({
         items: 1,
-        loop: true,
-        center: true
+        //loop: true,
+        center: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        nav: true,
+        navText: ['', '']
       });
-      carousel.on('changed.owl.carousel', function(event) {
+      vm.carousel.on('changed.owl.carousel', function(event) {
+        console.log('change');
         vm.currentProduct = vm.products[event.page.index];
         $scope.$apply();
       });
     }
 
     vm.buy = function(event) {
-      $('.js-carousel').fadeOut('normal');
-      $('.js-logo').fadeOut('normal');
+      vm.carousel.trigger('stop.owl.autoplay');
+      vm.carousel.find('.owl-controls').fadeOut('normal');
+      //$('.js-carousel').fadeOut('normal');
+      //$('.js-logo').fadeOut('normal');
       $('.js-buy').slideUp('normal', function(){
         $('.js-sizes').slideDown('normal');
       });
@@ -38160,14 +38168,19 @@ return jQuery;
 
     vm.selectSize = function(size){
       vm.selectedSize = size;
-    }
-
-    vm.sizeSelected = function(event) {
       $('.js-carousel').fadeOut('normal');
       $('.js-sizes').slideUp('normal', function(){
         $('.js-phone').slideDown('normal');
+        $('.js-phone').find('input[type="text"]').focus();
       });
     }
+
+    // vm.sizeSelected = function(event) {
+    //   $('.js-carousel').fadeOut('normal');
+    //   $('.js-sizes').slideUp('normal', function(){
+    //     $('.js-phone').slideDown('normal');
+    //   });
+    // }
 
     vm.addNumber = function(number){
       vm.phoneNumber += number;
@@ -38178,18 +38191,33 @@ return jQuery;
     }
 
     vm.numberComplete = function(event){
-      $('.js-phone').slideUp('normal', function(){
-        $('.js-confirm').slideDown('normal');
-        var boughtItem = vm.currentProduct;
-        boughtItem.size = vm.selectedSize;
-        boughtItem.phone = vm.phoneNumber;
-        vm.bought.push(boughtItem);
-        $localStorage.bought = angular.toJson(vm.bought);
-      });
+      var phoneLength = $('.js-phone').find('input[type="text"]').val().length;
+      console.log(phoneLength);
+      if(phoneLength == 8) {
+        $('.js-phone').slideUp('normal', function(){
+          $('.js-confirm').slideDown('normal');
+          var boughtItem = vm.currentProduct;
+          boughtItem.size = vm.selectedSize;
+          boughtItem.phone = vm.phoneNumber;
+          vm.bought.push(boughtItem);
+          $localStorage.bought = angular.toJson(vm.bought);
+        });
+      }
+      else {
+        $('js-phone').find('input[type="text"]').focus();
+      }
     }
 
     vm.adminMode = function(){
       vm.admin = !vm.admin;
+    }
+
+    vm.adminRemove = function(item) {
+      // console.log(item);
+      var index = vm.bought.indexOf(item);
+      // console.log(index);
+      vm.bought.splice(index, 1);
+      $localStorage.bought = angular.toJson(vm.bought);
     }
   }
 })();
@@ -41301,6 +41329,258 @@ return jQuery;
 
       function getProducts(){
         return [
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_blue.jpg',
+            color: 'blå',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_brown.jpg',
+            color: 'brun',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_green.jpg',
+            color: 'grønn',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_grey.jpg',
+            color: 'grå',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_yellow.jpg',
+            color: 'gul',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_purple.jpg',
+            color: 'lilla',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_red.jpg',
+            color: 'Red',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_whine_red.jpg',
+            color: 'Whine red',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_grey.jpg',
+            color: 'grå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_dark_grey.jpg',
+            color: 'mørke grå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_black.jpg',
+            color: 'sort',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_blue.jpg',
+            color: 'blå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_blue.jpg',
+            color: 'blå',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_brown.jpg',
+            color: 'brun',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_green.jpg',
+            color: 'grønn',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_grey.jpg',
+            color: 'grå',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_yellow.jpg',
+            color: 'gul',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_purple.jpg',
+            color: 'lilla',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_red.jpg',
+            color: 'Red',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_whine_red.jpg',
+            color: 'Whine red',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_grey.jpg',
+            color: 'grå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_dark_grey.jpg',
+            color: 'mørke grå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_black.jpg',
+            color: 'sort',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_blue.jpg',
+            color: 'blå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_blue.jpg',
+            color: 'blå',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_brown.jpg',
+            color: 'brun',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_green.jpg',
+            color: 'grønn',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_grey.jpg',
+            color: 'grå',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_yellow.jpg',
+            color: 'gul',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_purple.jpg',
+            color: 'lilla',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_red.jpg',
+            color: 'Red',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Pima Genser',
+            image: 'app/assets/images/genser_whine_red.jpg',
+            color: 'Whine red',
+            price: 299,
+            logo: 'app/assets/images/dressmann-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_grey.jpg',
+            color: 'grå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_dark_grey.jpg',
+            color: 'mørke grå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_black.jpg',
+            color: 'sort',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
+          {
+            name: 'Smilla Cardigan',
+            image: 'app/assets/images/cardigan_blue.jpg',
+            color: 'blå',
+            price: 499,
+            logo: 'app/assets/images/bikbok-logo.png'
+          },
           {
             name: 'Pima Genser',
             image: 'app/assets/images/genser_blue.jpg',
