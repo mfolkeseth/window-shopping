@@ -32,8 +32,8 @@
         <div class="sizes js-sizes">
           <h1>
             Velg størrelse <br>
-            (Usikker på størrelse?) <br>
-            Varene kan prøves her
+            (Usikker på størrelse? <br>
+            Varene kan prøves her)
           </h1>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('S', $event)">S</button>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('M')">M</button>
@@ -51,7 +51,7 @@
           </h1>
           <form>
             <label for="phone-number">Mob:</label>
-            <input type="text" name="phone-number" id="phone-number" ng-model="mainController.phoneNumber">
+            <input type="text" name="phone-number" id="phone-number" maxlength="8" ng-model="mainController.phoneNumber">
             <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.numberComplete($event)">OK</button>
             <div class="numpad">
               <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.addNumber('7')">7</button>
@@ -85,7 +85,8 @@
               <th>Farge</th>
               <th>Str</th>
               <th>Pris</th>
-              <th>Telefon</th>
+              <th>Tlf</th>
+              <th>Tid</th>
               <th></th>
             </tr>
           </thead>
@@ -97,6 +98,7 @@
               <td>{{ row.size }}</td>
               <td>{{ row.price }}</td>
               <td>{{ row.phone }}</td>
+              <td>{{ row.orderTime }}</td>
               <td><button ng-click="mainController.adminRemove(row)">X</button></td>
             </tr>
           </tbody>

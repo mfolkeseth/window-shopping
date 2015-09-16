@@ -77,7 +77,9 @@
     // }
 
     vm.addNumber = function(number){
-      vm.phoneNumber += number;
+      if(vm.phoneNumber.length < 8) {
+          vm.phoneNumber += number;
+      }
     }
 
     vm.removeNumber = function(){
@@ -92,6 +94,8 @@
           var boughtItem = vm.currentProduct;
           boughtItem.size = vm.selectedSize;
           boughtItem.phone = vm.phoneNumber;
+          var now = new Date();
+          boughtItem.orderTime = now.getHours() + ':' + now.getMinutes();
           vm.bought.push(boughtItem);
           $localStorage.bought = angular.toJson(vm.bought);
         });
