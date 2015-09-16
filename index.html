@@ -35,10 +35,11 @@
             (Usikker på størrelse? <br>
             Varene kan prøves her)
           </h1>
-          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('S', $event)">S</button>
+          <button ng-if="mainController.currentProduct.producer == 'b'" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('XS')">XS</button>
+          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('S')">S</button>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('M')">M</button>
           <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('L')">L</button>
-          <button class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('XL')">XL</button>
+          <button ng-if="mainController.currentProduct.producer == 'd'" class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect" ng-click="mainController.selectSize('XL')">XL</button>
           <h1 ng-show="mainController.selectedSize.length > 0">Størrelse: {{ mainController.selectedSize }}</h1>
           <!-- <button ng-show="mainController.selectedSize.length > 0"
             class="mdl-button mdl-button--colored mdl-button--raised mdl-js-button mdl-js-ripple-effect"
@@ -81,7 +82,6 @@
           <thead>
             <tr>
               <th></th>
-              <th>Produkt</th>
               <th>Farge</th>
               <th>Str</th>
               <th>Pris</th>
@@ -93,7 +93,6 @@
           <tbody>
             <tr ng-repeat="row in mainController.bought">
               <td><img src="{{ row.image }}" alt=""></td>
-              <td>{{ row.name }}</td>
               <td>{{ row.color }}</td>
               <td>{{ row.size }}</td>
               <td>{{ row.price }}</td>
